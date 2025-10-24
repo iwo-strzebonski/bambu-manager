@@ -190,6 +190,23 @@ docker-compose down -v
 docker-compose up -d --build
 ```
 
+## Security
+
+This is a **starter template** for development. For production deployments, additional security hardening is required.
+
+See [SECURITY.md](SECURITY.md) for:
+- Security analysis results
+- Production security recommendations
+- Best practices for developers
+
+Key security considerations for production:
+- Implement rate limiting on all endpoints
+- Add authentication and authorization
+- Configure CORS for specific origins
+- Use HTTPS/TLS
+- Strong database passwords
+- Regular dependency updates
+
 ## Future: Git Submodules
 
 When the `bambu-manager-frontend` and `bambu-manager-backend` repositories are created, this monorepo can be converted to use Git submodules:
