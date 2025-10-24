@@ -60,13 +60,15 @@ services:
     container_name: bambu-manager-frontend
     restart: unless-stopped
     ports:
-      - "80:80"
+      - "3001:3000"
+    environment:
+      API_BASE: http://backend:3000
     depends_on:
       - backend
     networks:
       - bambu-network
     healthcheck:
-      test: ["CMD-SHELL", "wget --no-verbose --tries=1 --spider http://localhost/health || exit 1"]
+      test: ["CMD-SHELL", "wget --no-verbose --tries=1 --spider http://localhost:3000/ || exit 1"]
       interval: 30s
       timeout: 10s
       retries: 3

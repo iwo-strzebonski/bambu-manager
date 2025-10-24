@@ -4,16 +4,15 @@ Frontend service for Bambu Manager.
 
 ## Technology Stack
 
-- React 18
-- Vite
-- Nginx (for production)
+- Nuxt 4 (Vue 3)
+- Node.js 22
 
 ## Features
 
-- React-based web interface
-- API proxy to backend
-- Production-ready Nginx configuration
-- Multi-stage Docker build
+- Vue 3 web interface
+- Server-side rendering with Nuxt
+- API integration with backend
+- Production-ready Node.js server
 
 ## Local Development
 
@@ -22,7 +21,7 @@ npm install
 npm run dev
 ```
 
-The development server will start on http://localhost:5173 with hot reload enabled.
+The development server will start on http://localhost:3000 with hot reload enabled.
 
 ## Build for Production
 
@@ -30,30 +29,28 @@ The development server will start on http://localhost:5173 with hot reload enabl
 npm run build
 ```
 
-The production build will be output to the `dist/` directory.
+The production build will be output to the `.output/` directory.
 
 ## Docker Build
 
 ```bash
 docker build -t bambu-manager-frontend .
-docker run -p 80:80 bambu-manager-frontend
+docker run -p 3001:3000 -e API_BASE=http://backend:3000 bambu-manager-frontend
 ```
 
 ## Configuration
 
-### Vite Configuration
+### Nuxt Configuration
 
-The `vite.config.js` file includes:
-- React plugin
-- API proxy to backend service
+The `nuxt.config.ts` file includes:
+- Nuxt 4 configuration
+- Server-side rendering setup
+- Runtime configuration for API base URL
 - Development server configuration
 
-### Nginx Configuration
+### Environment Variables
 
-The `nginx.conf` file configures:
-- Static file serving
-- API proxy to backend
-- Health check endpoint proxy
+- `API_BASE`: Backend API URL (default: http://backend:3000)
 
 ## Notes
 

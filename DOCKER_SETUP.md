@@ -18,7 +18,7 @@ bambu-manager/
 ### 2. Backend Service (`backend/`)
 
 **Files:**
-- `Dockerfile` - Multi-layer Docker image for Node.js backend
+- `Dockerfile` - Multi-layer Docker image for Node.js 22 backend
 - `package.json` - Node.js dependencies (Express, pg, cors, dotenv)
 - `index.js` - Main application with Express server and PostgreSQL connection
 - `.env.example` - Environment variables template
@@ -27,6 +27,7 @@ bambu-manager/
 
 **Features:**
 - Express.js REST API on port 3000
+- Node.js 22
 - PostgreSQL database connection
 - Health check endpoint at `/health`
 - CORS enabled for frontend communication
@@ -41,28 +42,23 @@ bambu-manager/
 ### 3. Frontend Service (`frontend/`)
 
 **Files:**
-- `Dockerfile` - Multi-stage build (Node.js build + Nginx serve)
-- `package.json` - React and Vite dependencies
-- `vite.config.js` - Vite configuration with API proxy
-- `nginx.conf` - Production Nginx configuration
-- `index.html` - Main HTML file
-- `src/main.jsx` - React entry point
-- `src/App.jsx` - Main React component with backend health check
+- `Dockerfile` - Multi-stage build (Node.js 22 build + Node.js serve)
+- `package.json` - Nuxt 4 and Vue 3 dependencies
+- `nuxt.config.ts` - Nuxt configuration with API integration
+- `app.vue` - Main Vue component with backend health check
 - `.dockerignore` - Files to exclude from Docker build
 - `README.md` - Service-specific documentation
 
 **Features:**
-- React 18 web application
-- Vite for development and build
-- Nginx for production serving
-- API proxy to backend
+- Nuxt 4 (Vue 3) web application
+- Node.js 22
+- Server-side rendering with Nuxt
+- API integration with backend
 - Responsive UI showing backend status
 
 **Dependencies:**
-- react ^18.2.0
-- react-dom ^18.2.0
-- vite ^4.3.9
-- @vitejs/plugin-react ^4.0.0
+- nuxt ^3.13.0
+- vue ^3.4.0
 
 ### 4. Database Service
 
@@ -87,11 +83,11 @@ bambu-manager/
    - Health check: API endpoint
    - LAN access: Configurable (see comments in docker-compose.yml)
 
-3. **frontend** - React/Nginx web app
+3. **frontend** - Nuxt 4 (Vue 3) web app
    - Depends on: backend
-   - Port: 80
+   - Port: 3001 (internal: 3000)
    - Network: bambu-network
-   - Health check: Nginx endpoint
+   - Health check: Nuxt server endpoint
 
 **Networks:**
 - `bambu-network` - Bridge network for inter-service communication
@@ -111,7 +107,7 @@ docker compose up -d --build
 ```
 
 ### Access Services
-- Frontend: http://localhost
+- Frontend: http://localhost:3001
 - Backend API: http://localhost:3000
 - Backend Health: http://localhost:3000/health
 - Database: localhost:5432
@@ -153,7 +149,7 @@ Note: Host network mode is only available on Linux.
 All services include health checks:
 - **Database**: Checks PostgreSQL readiness
 - **Backend**: Checks API endpoint at `/health`
-- **Frontend**: Checks Nginx server availability
+- **Frontend**: Checks Nuxt server availability
 
 View health status:
 ```bash
@@ -168,7 +164,7 @@ POSTGRES_DB=bambu_manager
 POSTGRES_USER=postgres
 POSTGRES_PASSWORD=postgres
 BACKEND_PORT=3000
-FRONTEND_PORT=80
+FRONTEND_PORT=3001
 ```
 
 ### Backend (.env.example)
@@ -212,12 +208,13 @@ git submodule update --init --recursive
 
 ## Technical Decisions
 
-1. **Node.js Backend**: Chose Express.js for simplicity and wide adoption
-2. **React Frontend**: Modern React with Vite for fast development
-3. **Multi-stage Frontend Build**: Optimizes production image size
-4. **PostgreSQL 15**: Latest stable version with Alpine for smaller image
-5. **Health Checks**: Ensures services are ready before dependent services start
-6. **Bridge Network**: Default networking for service isolation and communication
+1. **Node.js 22**: Latest LTS version for both backend and frontend
+2. **Express.js Backend**: Chose Express.js for simplicity and wide adoption
+3. **Nuxt 4 Frontend**: Modern Vue 3 framework with server-side rendering
+4. **Multi-stage Frontend Build**: Optimizes production image size
+5. **PostgreSQL 15**: Latest stable version with Alpine for smaller image
+6. **Health Checks**: Ensures services are ready before dependent services start
+7. **Bridge Network**: Default networking for service isolation and communication
 7. **Persistent Volumes**: Database data survives container restarts
 
 ## Testing
@@ -233,7 +230,7 @@ For full functional testing, run:
 ./start.sh
 # Wait for services to be healthy
 docker compose ps
-# Test frontend: curl http://localhost
+# Test frontend: curl http://localhost:3001
 # Test backend: curl http://localhost:3000/health
 # Test database: docker compose exec db psql -U postgres -d bambu_manager -c 'SELECT 1;'
 ```

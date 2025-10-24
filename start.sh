@@ -24,7 +24,7 @@ docker compose ps
 
 echo ""
 echo "Access the application:"
-echo "  Frontend: http://localhost"
+echo "  Frontend: http://localhost:3001"
 echo "  Backend API: http://localhost:3000"
 echo "  Database: localhost:5432"
 echo ""

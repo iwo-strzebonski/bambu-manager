@@ -6,7 +6,7 @@ A monorepo for managing Bambu 3D printers, consisting of a frontend, backend, an
 
 This project is organized as a monorepo with the following services:
 
-- **Frontend**: React-based web interface (port 80)
+- **Frontend**: Nuxt 4 (Vue 3) web interface (port 3001)
 - **Backend**: Node.js/Express API server with database access (port 3000)
 - **Database**: PostgreSQL database (port 5432)
 
@@ -22,9 +22,8 @@ bambu-manager/
 ├── frontend/             # Frontend service (bambu-manager-frontend)
 │   ├── Dockerfile
 │   ├── package.json
-│   ├── vite.config.js
-│   ├── nginx.conf
-│   └── src/
+│   ├── nuxt.config.ts
+│   └── app.vue
 ├── docker-compose.yml    # Docker orchestration
 └── README.md
 ```
@@ -48,7 +47,7 @@ bambu-manager/
    ```
 
 3. Access the application:
-   - Frontend: http://localhost
+   - Frontend: http://localhost:3001
    - Backend API: http://localhost:3000
    - Database: localhost:5432
 
@@ -56,7 +55,7 @@ bambu-manager/
 
 ### Backend
 
-The backend service is a Node.js/Express application that:
+The backend service is a Node.js 22/Express application that:
 - Connects to the PostgreSQL database
 - Has access to the LAN (network mode can be configured)
 - Exposes a REST API on port 3000
@@ -72,11 +71,10 @@ The backend service is a Node.js/Express application that:
 
 ### Frontend
 
-The frontend service is a React application that:
+The frontend service is a Nuxt 4 (Vue 3) application that:
 - Communicates with the backend API
-- Serves a web interface on port 80
-- Uses Vite for development and build
-- Uses Nginx for production serving
+- Serves a web interface on port 3001 (internal port 3000)
+- Uses Nuxt for server-side rendering and development
 
 ### Database
 
