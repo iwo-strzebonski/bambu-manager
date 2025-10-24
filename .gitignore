@@ -18,9 +18,6 @@ dist/
 build/
 *.log
 
-# Docker
-.dockerignore
-
 # IDE
 .vscode/
 .idea/
