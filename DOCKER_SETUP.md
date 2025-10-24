@@ -235,4 +235,5 @@ For full functional testing, run:
 docker compose ps
 # Test frontend: curl http://localhost
 # Test backend: curl http://localhost:3000/health
+# Test database: docker compose exec db psql -U postgres -d bambu_manager -c 'SELECT 1;'
 ```

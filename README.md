@@ -146,6 +146,11 @@ docker-compose up -d --build
 docker-compose down -v
 ```
 
+### Test database connection
+```bash
+docker compose exec db psql -U postgres -d bambu_manager -c 'SELECT 1;'
+```
+
 ## LAN Access
 
 The backend service has access to the LAN. To enable host network mode for full LAN access:
